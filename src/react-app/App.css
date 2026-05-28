@@ -1,8 +1,20 @@
 #root {
-	max-width: 1280px;
-	margin: 0 auto;
-	padding: 2rem;
+	margin: 0;
+	padding: 0;
+	width: 100%;
 	text-align: center;
+}
+
+body {
+	/* This is the setup code for the "wallpaper" */
+	margin: 0;
+	padding: 0;
+	background-image: url("../../public/CHAIR.JPG");
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-attachment: fixed; /* This is the "wallpaper" effect */
+	min-height: 100vh;
 }
 
 .logo {

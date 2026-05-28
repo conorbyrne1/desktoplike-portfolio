@@ -1,0 +1,16 @@
+body{
+    margin: 0;
+    padding: 0;
+}
+
+.taskbarBox {
+    width: 100%;           /* Sets the width */
+    height: 5vh;          /* Sets the height */
+    border: none; /* Creates a visible outline */
+    background-color: rgba(0, 0, 0, 0.8); /* Fills the box with color */
+    margin: 0;
+    box-sizing: border-box;
+
+    position: fixed;
+    bottom: 0;
+}
