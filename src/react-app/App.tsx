@@ -14,11 +14,17 @@ import "./App.css";
 
 function App() {
 	return (
-		<div>
-			<h1>test</h1>
-			<Window />
+		<>
+			<h1>tests</h1>
+			<Window width="250px" height="250px" x="50px" y="50px">
+				<p>hello</p>
+			</Window>
+
+			<Window width="400px" height="100px">
+				<p>long window</p>
+			</Window>
 			<Taskbar />
-		</div>
+		</>
 	);
 }
 
