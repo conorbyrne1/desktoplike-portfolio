@@ -1,13 +1,19 @@
 import { useRef, useEffect, useState } from 'react';
 import { X, Minus, Maximize } from 'lucide-react';
+import {getNextZIndex} from "./windowZIndex.tsx";
 import "./window.css"
+
 
 function Window({children, width, height, x = 0, y = 0}) {
     const ref = useRef<HTMLDivElement>(null);
+    const toolbarRef = useRef<HTMLDivElement>(null);
+
+    const [zIndex, setZindex] = useState(1);
 
     useEffect(() => {
         const element = ref.current;
-        if (!element) return;
+        const toolbar = toolbarRef.current;
+        if (!element || !toolbar) return;
 
         // Set an initial position so getComputedStyle never returns "auto"
         element.style.left = `${element.offsetLeft}px`;
@@ -20,17 +26,39 @@ function Window({children, width, height, x = 0, y = 0}) {
             element.style.top = `${top + event.movementY}px`;
         };
 
-        const onMouseDown = () => {
-            document.addEventListener("mousemove", onMouseDrag);
-            document.addEventListener(
-                "mouseup",
-                () => document.removeEventListener("mousemove", onMouseDrag),
-                { once: true }
-            );
+        // const onMouseDown = () => {
+        //     setZindex(getNextZIndex());
+        //     document.addEventListener("mousemove", onMouseDrag);
+        //     document.addEventListener(
+        //         "mouseup",
+        //         () => document.removeEventListener("mousemove", onMouseDrag),
+        //         { once: true }
+        //     );
+        // };
+
+        const onWindowMouseDown = () => {
+            setZindex(getNextZIndex());
         };
 
-        element.addEventListener("mousedown", onMouseDown);
-        return () => element.removeEventListener("mousedown", onMouseDown); // cleanup
+        const onToolbarMouseDown = () => {
+            document.addEventListener('mousemove', onMouseDrag);
+            document.addEventListener(
+                'mouseup',
+                () => document.removeEventListener('mousemove', onMouseDrag),
+                { once: true}
+                );
+        };
+
+        element.addEventListener("mousedown", onWindowMouseDown);
+        toolbar.addEventListener("mousedown", onToolbarMouseDown);
+
+        return () => {
+            element.removeEventListener("mousedown", onWindowMouseDown);
+            toolbar.removeEventListener("mousedown", onToolbarMouseDown);
+        };
+
+        // element.addEventListener("mousedown", onMouseDown);
+        // return () => element.removeEventListener("mousedown", onMouseDown); // cleanup
     }, []);
 
     const [visible, setVisible] = useState(true);
@@ -38,8 +66,8 @@ function Window({children, width, height, x = 0, y = 0}) {
     if (!visible) return null;
 
     return (
-        <div ref={ref} className="WindowBox" style={{ width, height, left: x, top: y }}>
-            <div className="Toolbar-Bar" />
+        <div ref={ref} className="WindowBox" style={{ width, height, left: x, top: y, zIndex }}>
+            <div ref={toolbarRef} className="Toolbar-Bar" />
             <div className="Toolbar">
                 <div ref={ref} className="Toolbar-WindowResize"><Minus /></div>
                 <div ref={ref} className="Toolbar-WindowResize"><Maximize /></div>

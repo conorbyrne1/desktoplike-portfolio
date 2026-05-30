@@ -3,13 +3,17 @@
     padding-top: 20px;
     background-color: darkseagreen;
     position: absolute;
-    cursor: grab;
+    /*cursor: grab;*/
 }
 
-.WindowBox:active {
-    cursor: grabbing;
-}
+/*.WindowBox:active {*/
+/*    cursor: grabbing;*/
+/*}*/
 
+/* TODO:
+    - add transitions for on hover for the action taskbar buttons
+    - add icons to the taskbar to reopen the windows
+    */
 .Window-Content {
     margin-top: 45px;
 }
@@ -32,6 +36,11 @@
     background-color: lightgray;
 
     border: outset;
+    cursor: grab;
+}
+
+.Toolbar-Bar:active {
+    cursor: grabbing;
 }
 
 .Toolbar-WindowResize{
